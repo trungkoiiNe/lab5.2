@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
-import {Text, StyleSheet} from 'react-native';
-import {Formik} from 'formik';
-import auth from '@react-native-firebase/auth';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {View, TextInput, Logo, Button, FormErrorMessage} from '../components';
-import {Images, Colors} from '../config';
-import {useTogglePasswordVisibility} from '../hooks';
-import {signupValidationSchema} from '../utils';
-export const SignupScreen = ({navigation}) => {
-  const [errorState, setErrorState] = useState('');
+import React, { useState } from "react";
+import { Text, StyleSheet, ToastAndroid } from "react-native";
+import { Formik } from "formik";
+import auth from "@react-native-firebase/auth";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { View, TextInput, Logo, Button, FormErrorMessage } from "../components";
+import { Images, Colors } from "../config";
+import { useTogglePasswordVisibility } from "../hooks";
+import { signupValidationSchema } from "../utils";
+export const SignupScreen = ({ navigation }) => {
+  const [errorState, setErrorState] = useState("");
   const {
     passwordVisibility,
     handlePasswordVisibility,
@@ -17,12 +17,16 @@ export const SignupScreen = ({navigation}) => {
     confirmPasswordIcon,
     confirmPasswordVisibility,
   } = useTogglePasswordVisibility();
-  const handleSignup = async values => {
-    const {email, password} = values;
+  const handleSignup = async (values) => {
+    const { email, password } = values;
     auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => navigation.navigate('Login'))
-      .catch(error => setErrorState(error.message));
+      .then(() => {
+        ToastAndroid.show("Signup Successful", ToastAndroid.SHORT);
+        setErrorState("");
+        // navigation.navigate("Login");
+      })
+      .catch((error) => setErrorState(error.message));
   };
   return (
     <View isSafe style={styles.container}>
@@ -35,12 +39,13 @@ export const SignupScreen = ({navigation}) => {
         {/* Formik Wrapper */}
         <Formik
           initialValues={{
-            email: '',
-            password: '',
-            confirmPassword: '',
+            email: "",
+            password: "",
+            confirmPassword: "",
           }}
           validationSchema={signupValidationSchema}
-          onSubmit={values => handleSignup(values)}>
+          onSubmit={(values) => handleSignup(values)}
+        >
           {({
             values,
             touched,
@@ -60,8 +65,8 @@ export const SignupScreen = ({navigation}) => {
                 textContentType="emailAddress"
                 autoFocus={true}
                 value={values.email}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
               />
               <FormErrorMessage error={errors.email} visible={touched.email} />
               <TextInput
@@ -75,8 +80,8 @@ export const SignupScreen = ({navigation}) => {
                 rightIcon={rightIcon}
                 handlePasswordVisibility={handlePasswordVisibility}
                 value={values.password}
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
+                onChangeText={handleChange("password")}
+                onBlur={handleBlur("password")}
               />
               <FormErrorMessage
                 error={errors.password}
@@ -93,15 +98,15 @@ export const SignupScreen = ({navigation}) => {
                 rightIcon={confirmPasswordIcon}
                 handlePasswordVisibility={handleConfirmPasswordVisibility}
                 value={values.confirmPassword}
-                onChangeText={handleChange('confirmPassword')}
-                onBlur={handleBlur('confirmPassword')}
+                onChangeText={handleChange("confirmPassword")}
+                onBlur={handleBlur("confirmPassword")}
               />
               <FormErrorMessage
                 error={errors.confirmPassword}
                 visible={touched.confirmPassword}
               />
               {/* Display Screen Error Mesages */}
-              {errorState !== '' ? (
+              {errorState !== "" ? (
                 <FormErrorMessage error={errorState} visible={true} />
               ) : null}
               {/* Signup button */}
@@ -115,8 +120,8 @@ export const SignupScreen = ({navigation}) => {
         <Button
           style={styles.borderlessButtonContainer}
           borderless
-          title={'Already have an account?'}
-          onPress={() => navigation.navigate('Login')}
+          title={"Already have an account?"}
+          onPress={() => navigation.navigate("Login")}
         />
       </KeyboardAwareScrollView>
     </View>
@@ -129,18 +134,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   logoContainer: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   screenTitle: {
     fontSize: 32,
-    fontWeight: '700',
+    fontWeight: "700",
     color: Colors.black,
     paddingTop: 20,
   },
   button: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 8,
     backgroundColor: Colors.orange,
     padding: 10,
@@ -149,11 +154,11 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     color: Colors.white,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   borderlessButtonContainer: {
     marginTop: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

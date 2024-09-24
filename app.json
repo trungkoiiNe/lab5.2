@@ -36,7 +36,20 @@
       ],
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
-      "@react-native-google-signin/google-signin"
+      "@react-native-google-signin/google-signin",
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "1261643335019437",
+          "clientToken": "ea0d066251b37a4130f50896a66343de",
+          "displayName": "RN SDK Demo",
+          "scheme": "fb48127127xxxxxxxx",
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": false,
+          "isAutoInitEnabled": true,
+          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ]
     ]
   }
 }

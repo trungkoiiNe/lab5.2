@@ -6,7 +6,7 @@ import auth from "@react-native-firebase/auth";
 import { View, TextInput, Logo, Button, FormErrorMessage } from "../components";
 import { Images, Colors } from "../config";
 import { AuthenticatedUserContext } from "../providers";
-
+import { FacebookSignIn } from "../components/FacebookSignIn";
 import { useTogglePasswordVisibility } from "../hooks";
 import { loginValidationSchema } from "../utils";
 // import { GoogleSignin } from "@react-native-google-signin/google-signin";
@@ -139,6 +139,7 @@ export const LoginScreen = ({ navigation }) => {
                   <Text style={styles.buttonText}>Login</Text>
                 </Button>
                 <GoogleSignInButton />
+                <FacebookSignIn/>
                 {/* Button to google sign in */}
                 {/* <Button
                   style={styles.borderlessButtonContainer}
